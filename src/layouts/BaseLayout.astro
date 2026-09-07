@@ -1,0 +1,11 @@
+---
+import '../styles/global.css';
+const { title = 'Grace Chapel — Plans & Projects', description = 'Grace Chapel Kannuru Plans & Projects' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><meta name="description" content={description} /><title>{title}</title>
+</head>
+<body><div class="shell"><header class="topbar"><a href="/">GRACE CHAPEL / PLANS & PROJECTS</a><nav class="nav" aria-label="Primary"><a href="/projects/">PROJECTS</a><a href="/transparency/">TRANSPARENCY</a><a href="/get-involved/">GET INVOLVED</a></nav></header><main><slot /></main><footer class="footer">GRACE CHAPEL · KANNURU CAMPUS · PLANS & PROJECTS</footer></div></body>
+</html>
