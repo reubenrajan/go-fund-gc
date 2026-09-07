@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import data from '../../data/projects.json';
+---
+<BaseLayout title="Projects — Grace Chapel Plans & Projects">
+<section class="detail-head"><div class="eyebrow">PROJECT REGISTER</div><h1>PROJECTS</h1><p class="muted">Canonical programme inventory. Alternatives and missing information remain explicitly marked.</p></section>
+<section class="section"><div class="grid">{data.projects.map((project, i) => <a class="card" href={`/projects/${project.id}/`}><span class="tag">{String(i+1).padStart(2,'0')} / {project.classification}</span><h3>{project.name}</h3><p>{project.phase}</p><span class="muted">{project.items.length} COMPONENTS →</span></a>)}</div></section>
+</BaseLayout>
