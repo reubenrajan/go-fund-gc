@@ -1,0 +1,8 @@
+{
+  "schema_version": "0.1",
+  "currency": "INR",
+  "status": "NOT_CONNECTED",
+  "last_updated": null,
+  "public_note": "Funding and expenditure data are not connected yet. No donor-level information is published.",
+  "components": {}
+}
