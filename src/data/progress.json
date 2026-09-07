@@ -1,0 +1,6 @@
+{
+  "schema_version": "0.1",
+  "financial": {"status": "NOT_CONNECTED"},
+  "physical": {},
+  "rule": "Financial completion is confirmed funding divided by approved budget, capped at 100%. Physical completion is independent."
+}
