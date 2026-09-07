@@ -1,0 +1,61 @@
+{
+  "schema_version": "0.1",
+  "currency": "INR",
+  "source_url": "https://sites.google.com/gracechapel.org.in/grace-chapel-plans-projects/home",
+  "projects": [
+    {"id":"sound-system","name":"Sound System","phase":"Phase 1 Upgrade","classification":"ACTIVE","items":[
+      {"id":"sound-full-range-speakers","name":"Full-range speakers","product":"JBL PRX 912/915 or Yamaha DBR 15","qty":2,"budget_inr":115000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative products listed; selection not established."},
+      {"id":"sound-subwoofers","name":"Subwoofers","product":"JBL PRX 915 XLF or Yamaha DXS 18","qty":2,"budget_inr":200000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative products listed; selection not established."},
+      {"id":"sound-drum-shield","name":"Drum Shield","product":"8 mm imported Korean transparent acrylic","qty":5,"budget_inr":50000,"priority":"PRIORITY","confidence":"EXPLICIT","notes":"Five frames."},
+      {"id":"sound-keyboard-amp","name":"Keyboard Amp","product":"Roland KC-80","qty":1,"budget_inr":45000,"priority":null,"confidence":"EXPLICIT","notes":""},
+      {"id":"sound-head-worn-mic","name":"Head worn mic","product":"DPA 4488","qty":1,"budget_inr":100000,"priority":null,"confidence":"EXPLICIT","notes":""},
+      {"id":"sound-other","name":"Other","product":"Cabling, servicing, connectors etc.","qty":1,"budget_inr":50000,"priority":null,"confidence":"EXPLICIT","notes":"Aggregate line item; not a single product."}
+    ]},
+    {"id":"videography","name":"Videography","phase":"Phase 1 Upgrade","classification":"ACTIVE","items":[
+      {"id":"video-camera","name":"Camera","product":"Canon XA60","qty":1,"budget_inr":115000,"priority":null,"confidence":"EXPLICIT","notes":"Streaming-ready 4K camera; exact procurement configuration not independently confirmed."},
+      {"id":"video-tripod","name":"Tripod","product":"E-image / Manfrotto","qty":1,"budget_inr":13000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative manufacturers listed; selection not established."},
+      {"id":"video-wireless-hdmi","name":"Wireless HDMI","product":"Hollyland / Swift","qty":1,"budget_inr":32000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative manufacturers listed; selection not established."},
+      {"id":"video-sd-card","name":"SD Card","product":"Sony Tough SD Card","qty":1,"budget_inr":10000,"priority":null,"confidence":"EXPLICIT","notes":"Exact capacity/model not specified."}
+    ]},
+    {"id":"media","name":"Media","phase":"Shoot / Edit / Broadcast","classification":"ACTIVE","items":[
+      {"id":"media-macbook","name":"Laptop","product":"MacBook Pro 14 in M4","qty":1,"budget_inr":240000,"priority":"PRIORITY","confidence":"EXPLICIT","notes":""},
+      {"id":"media-dock","name":"Display dock","product":"WAVLINK display dock","qty":1,"budget_inr":23000,"priority":"PRIORITY","confidence":"EXPLICIT","notes":"Exact model not specified."},
+      {"id":"media-atem","name":"Live streaming switcher","product":"ATEM Mini ISO G2","qty":1,"budget_inr":209800,"priority":null,"confidence":"EXPLICIT","notes":"Exact product naming needs reconciliation against procurement source."}
+    ]},
+    {"id":"air-cooling","name":"Air Cooling System","phase":"Evaporative Air Coolers","classification":"ACTIVE","items":[
+      {"id":"cooling-evaporative-cooler","name":"Evaporative air cooler","product":"CY-18TA/DA Model","qty":1,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"10,200 CFM; 12-speed motor; Auto Drain; Chill Cell Pad; UV-protected shell."}
+    ]},
+    {"id":"power","name":"Power","phase":"Power Backup","classification":"ACTIVE","items":[
+      {"id":"power-kirloskar-45kva","name":"Generator option","product":"Kirloskar 45 kVA","qty":1,"budget_inr":690000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative to 58.5 kVA option."},
+      {"id":"power-kirloskar-58-5kva","name":"Generator option","product":"Kirloskar 58.5 kVA","qty":1,"budget_inr":780000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative to 45 kVA option."}
+    ]},
+    {"id":"security-system","name":"Security System","phase":"CCTV & Others","classification":"ACTIVE","items":[
+      {"id":"security-cctv","name":"CCTV installation","product":"CCTV system — manufacturer/model not specified","qty":1,"budget_inr":45000,"priority":null,"confidence":"EXPLICIT","notes":"Installation around premises."}
+    ]},
+    {"id":"church-building","name":"Church Building","phase":"Grace Chapel Kannuru Campus","classification":"ACTIVE","items":[
+      {"id":"building-storage-room","name":"Storage room","product":"Built outside","qty":1,"budget_inr":null,"priority":"PRIORITY","confidence":"EXPLICIT","notes":""},
+      {"id":"building-roofing","name":"Roofing solutions","product":"Not specified","qty":1,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Scope exists but material/system is not specified."},
+      {"id":"building-false-ceiling","name":"False Ceiling","product":"Not specified","qty":1,"budget_inr":200000,"priority":null,"confidence":"EXPLICIT","notes":""},
+      {"id":"building-xlpe-insulation","name":"XLPE Sheet insulation","product":"XLPE Sheet","qty":1,"budget_inr":152000,"priority":null,"confidence":"EXPLICIT","notes":""},
+      {"id":"building-ceramic-tiles","name":"Ceramic tiles","product":"Ceramic tiles","qty":1,"budget_inr":270000,"priority":null,"confidence":"EXPLICIT","notes":""},
+      {"id":"building-vinyl-flooring","name":"Vinyl flooring","product":"Vinyl flooring","qty":1,"budget_inr":80000,"priority":null,"confidence":"EXPLICIT","notes":""},
+      {"id":"building-clay-tiles","name":"Clay tiles","product":"Clay tiles","qty":1,"budget_inr":100000,"priority":null,"confidence":"EXPLICIT","notes":""},
+      {"id":"building-children-flooring","name":"Children Church flooring","product":"Grass Mat","qty":1,"budget_inr":null,"priority":"PRIORITY","confidence":"EXPLICIT","notes":"Budget not supplied."}
+    ]},
+    {"id":"future-projects","name":"Future Projects","phase":"Limitless","classification":"VISION","items":[
+      {"id":"future-in-ear","name":"In-ear monitor system","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Media next phase."},
+      {"id":"future-stage-lighting","name":"Stage lighting upgrade","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Media next phase."},
+      {"id":"future-led-wall","name":"LED wall","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Media next phase."},
+      {"id":"future-electronic-drums","name":"Electronic drum kit","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Media next phase."},
+      {"id":"future-digital-mixer","name":"Digital mixer","product":"32 channel","qty":1,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Media next phase."},
+      {"id":"future-toilets","name":"Extra toilets","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Church building next phase."},
+      {"id":"future-sound-proofing","name":"Sound proofing","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Church building next phase."},
+      {"id":"future-interiors","name":"Interiors","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Church building next phase."},
+      {"id":"future-land","name":"Church land in Bengaluru","product":"Land acquisition","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Future project."},
+      {"id":"future-campus","name":"Church building & campus","product":"Building/campus development","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Future project."},
+      {"id":"future-transportation","name":"Transportation","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Future project."},
+      {"id":"future-outreach-vehicle","name":"Outreach vehicle","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Future project."},
+      {"id":"future-private-jet","name":"Private jet","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Future project."}
+    ]}
+  ]
+}
