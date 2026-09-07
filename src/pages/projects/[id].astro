@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import data from '../../data/projects.json';
+const project = data.projects.find((p) => p.id === Astro.params.id);
+if (!project) throw new Error(`Unknown project: ${Astro.params.id}`);
+const priced = project.items.filter((x) => x.budget_inr != null);
+const total = priced.reduce((sum, x) => sum + x.budget_inr, 0);
+---
+<BaseLayout title={`${project.name} — Grace Chapel Plans & Projects`}>
+<section class="detail-head"><div class="eyebrow">PROJECT / {project.id}</div><h1>{project.name}</h1><p class="muted">{project.phase} · {project.classification}</p></section>
+<section class="detail-grid"><div class="panel"><h2>Components</h2><table><thead><tr><th>Component</th><th>Product / material</th><th>Budget</th><th>State</th></tr></thead><tbody>{project.items.map((item) => <tr><td>{item.name}</td><td>{item.product}<br/><span class="muted">{item.notes}</span></td><td>{item.budget_inr != null ? `₹${item.budget_inr.toLocaleString('en-IN')}` : '—'}</td><td><span class="tag">{item.priority || 'NORMAL'}</span></td></tr>)}</tbody></table></div><aside class="panel"><h2>Known priced scope</h2><div class="price">₹{total.toLocaleString('en-IN')}</div><p class="muted">Sum of priced component lines currently in the canonical inventory. This is not a confirmed fundraising target.</p><h2 style="margin-top:36px">Source discipline</h2><p class="muted">Unspecified products, alternatives and missing budgets are preserved rather than inferred.</p></aside></section>
+</BaseLayout>
