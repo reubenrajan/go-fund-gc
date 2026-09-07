@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import data from '../data/projects.json';
+import progress from '../data/progress.json';
+const priced = data.projects.flatMap(p => p.items).filter(x => x.budget_inr != null);
+const known = priced.reduce((sum,x)=>sum+x.budget_inr,0);
+---
+<BaseLayout title="Progress — Grace Chapel Plans & Projects">
+<section class="detail-head"><div class="eyebrow">PROGRAMME PROGRESS</div><h1>PROGRESS</h1><p class="muted">Financial and physical completion are separate signals. The public financial feed is not connected yet.</p></section>
+<section class="section"><div class="metrics"><div class="metric"><div class="label">Financial feed</div><div class="value">{progress.financial.status}</div></div><div class="metric"><div class="label">Known budget scope</div><div class="value">₹{known.toLocaleString('en-IN')}</div></div><div class="metric"><div class="label">Funding received</div><div class="value">—</div></div><div class="metric"><div class="label">Physical status</div><div class="value">TRACKING</div></div></div></section>
+<section class="section"><h2>Calculation rule</h2><p class="muted">{progress.rule}</p></section>
+<section class="section"><h2>Project status</h2><div class="grid">{data.projects.map(p=><a class="card" href={`/grace-chapel-plans-projects/projects/${p.id}/`}><span class="tag">{p.classification}</span><h3>{p.name}</h3><p>{p.phase}</p><span class="mono muted">DETAILS →</span></a>)}</div></section>
+</BaseLayout>
