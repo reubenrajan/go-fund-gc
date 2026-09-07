@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import data from '../data/projects.json';
+const priced = data.projects.flatMap((p) => p.items).filter((x) => x.budget_inr != null);
+const total = priced.reduce((sum, x) => sum + x.budget_inr, 0);
+---
+<BaseLayout title="Transparency — Grace Chapel Plans & Projects">
+<section class="detail-head"><div class="eyebrow">PROGRAMME TRANSPARENCY</div><h1>WHAT IS KNOWN</h1><p class="muted">Financial and product information is shown only where the source supports it.</p></section>
+<section class="section"><div class="metrics"><div class="metric"><div class="label">Known priced components</div><div class="value">{priced.length}</div></div><div class="metric"><div class="label">Known priced scope</div><div class="value">₹{total.toLocaleString('en-IN')}</div></div><div class="metric"><div class="label">Donor data</div><div class="value">PRIVATE</div></div><div class="metric"><div class="label">Alternatives</div><div class="value">PRESERVED</div></div></div></section>
+<section class="section"><h2>Financial rule</h2><p>Known component budgets are not presented as a single programme fundraising target until alternatives, scope and status are reconciled.</p></section>
+</BaseLayout>
