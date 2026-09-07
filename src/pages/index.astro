@@ -1,0 +1,85 @@
+---
+const data = {
+  projects: [
+    { id: 'sound-system', name: 'Sound System', phase: 'Phase 1 Upgrade', classification: 'ACTIVE', count: 6 },
+    { id: 'videography', name: 'Videography', phase: 'Phase 1 Upgrade', classification: 'ACTIVE', count: 4 },
+    { id: 'media', name: 'Media', phase: 'Shoot / Edit / Broadcast', classification: 'ACTIVE', count: 3 },
+    { id: 'air-cooling', name: 'Air Cooling System', phase: 'Evaporative Air Coolers', classification: 'ACTIVE', count: 1 },
+    { id: 'power', name: 'Power', phase: 'Power Backup', classification: 'ACTIVE', count: 2 },
+    { id: 'security-system', name: 'Security System', phase: 'CCTV & Others', classification: 'ACTIVE', count: 1 },
+    { id: 'church-building', name: 'Church Building', phase: 'Grace Chapel Kannuru Campus', classification: 'ACTIVE', count: 8 },
+    { id: 'future-projects', name: 'Future Projects', phase: 'Limitless', classification: 'VISION', count: 13 }
+  ]
+};
+const knownScope = 1624800;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Grace Chapel Kannuru Plans & Projects — transparent view of projects, components and funding." />
+    <title>Grace Chapel — Plans & Projects</title>
+    <style>
+      :root{--bg:#000;--fg:#fff;--muted:#8a8a8a;--line:#222;--soft:#0a0a0a;--accent:#6ee7a0;font-family:Arial,Helvetica,sans-serif}
+      *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--fg)}a{color:inherit;text-decoration:none}.wrap{max-width:1440px;margin:0 auto;padding:0 28px}.top{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font:12px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}.nav{display:flex;gap:20px}.nav a{color:#aaa}.nav a:hover{color:#fff}
+      .hero{padding:92px 0 80px;border-bottom:1px solid var(--line)}.kicker{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.15em;color:var(--muted)}h1{font-size:clamp(56px,10vw,150px);line-height:.84;letter-spacing:-.07em;margin:20px 0 26px;max-width:1100px}.lede{font-size:21px;line-height:1.55;max-width:760px;color:#c8c8c8}
+      .section{padding:54px 0;border-bottom:1px solid var(--line)}.label{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px}
+      .metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);gap:1px;background:var(--line)}.metric{background:#000;padding:24px;min-height:140px}.metric .n{font:34px ui-monospace,SFMono-Regular,Menlo,monospace;margin-top:14px}.metric .s{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);text-transform:uppercase}
+      .grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);gap:1px;background:var(--line)}.card{background:#000;min-height:250px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}.card:hover{background:var(--soft)}.tag{display:inline-block;border:1px solid #444;padding:5px 7px;font:10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}.card h2{font-size:30px;line-height:1;margin:22px 0 10px;letter-spacing:-.03em}.card p{color:#aaa;line-height:1.4}.arrow{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;color:#aaa}
+      .statement{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:start}.statement h2{font-size:48px;line-height:.95;letter-spacing:-.05em;margin:0}.statement p{font-size:17px;line-height:1.6;color:#bbb;margin:0}.footer{padding:28px 0 40px;color:#777;font:10px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase}
+      @media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}.statement{grid-template-columns:1fr}}
+      @media(max-width:620px){.wrap{padding:0 16px}.top{height:auto;min-height:64px;padding:14px 0;align-items:flex-start}.nav{gap:10px;flex-wrap:wrap;justify-content:flex-end}.hero{padding:62px 0}.grid,.metrics{grid-template-columns:1fr}h1{font-size:54px}.lede{font-size:18px}}
+      @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a href="/">GRACE CHAPEL / PLANS & PROJECTS</a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#projects">PROJECTS</a><a href="#transparency">TRANSPARENCY</a><a href="#involved">GET INVOLVED</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="kicker">001 / KANNURU CAMPUS / PROGRAMME SYSTEM</div>
+          <h1>SEE THE BUILDING.<br />UNDERSTAND THE PROJECT.</h1>
+          <p class="lede">A project-first view of the Grace Chapel Kannuru programme. Explore equipment, building work, priorities and known financial scope without hiding uncertainty.</p>
+        </section>
+
+        <section class="section" aria-labelledby="dashboard">
+          <div class="label" id="dashboard">Programme dashboard</div>
+          <div class="metrics">
+            <div class="metric"><div class="s">Programme areas</div><div class="n">8</div></div>
+            <div class="metric"><div class="s">Components</div><div class="n">38</div></div>
+            <div class="metric"><div class="s">Known priced scope</div><div class="n">₹{knownScope.toLocaleString('en-IN')}</div></div>
+            <div class="metric"><div class="s">Data rule</div><div class="n">OPEN</div></div>
+          </div>
+        </section>
+
+        <section class="section" id="projects" aria-labelledby="project-register">
+          <div class="label" id="project-register">Project register / 01–08</div>
+          <div class="grid">
+            {data.projects.map((project, i) => (
+              <a class="card" href={`/projects/${project.id}`}>
+                <div><span class="tag">{String(i + 1).padStart(2,'0')} / {project.classification}</span><h2>{project.name}</h2><p>{project.phase}</p></div>
+                <div class="arrow">{project.count} COMPONENTS →</div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section class="section" id="transparency">
+          <div class="statement"><h2>FINANCIAL TRUTH<br />BEFORE POLISH.</h2><p>Budgets shown here are known priced lines from the current source inventory. Alternatives are not double-counted. Missing budgets stay missing. Donor-level information is not published.</p></div>
+        </section>
+
+        <section class="section" id="involved">
+          <div class="statement"><h2>BUILD A PIECE<br />OF THE WORK.</h2><p>Funding, equipment gifts, volunteering and other support will be connected to approved projects and components as the programme's financial workflow is established.</p></div>
+        </section>
+      </main>
+      <footer class="footer">GRACE CHAPEL · KANNURU CAMPUS · PLANS & PROJECTS</footer>
+    </div>
+  </body>
+</html>
