@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import products from '../data/products.json';
+---
+<BaseLayout title="Product Research — Grace Chapel Plans & Projects">
+<section class="detail-head"><div class="eyebrow">PRODUCT RESEARCH / PROVENANCE</div><h1>PRODUCTS</h1><p class="muted">Manufacturer and model records are separated from the original project requirement. Alternatives are never presented as selected equipment.</p></section>
+<section class="section"><div class="grid">
+{products.products.map((p, i) => <a class="card" href={p.source} target="_blank" rel="noreferrer"><span class="tag">{p.status} / {p.confidence}</span><div><h3>{p.manufacturer}</h3><p>{p.model}</p><p class="muted">Component: {p.component_id}</p></div><span class="mono muted">OFFICIAL SOURCE →</span></a>)}
+</div></section>
+</BaseLayout>
