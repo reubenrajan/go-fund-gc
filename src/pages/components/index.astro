@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import data from '../../data/projects.json';
+const components = data.projects.flatMap(p => p.items.map(item => ({...item, projectId:p.id, projectName:p.name})));
+---
+<BaseLayout title="Components — Grace Chapel Plans & Projects">
+<section class="detail-head"><div class="eyebrow">COMPONENT REGISTER</div><h1>COMPONENTS</h1><p class="muted">Every defined requirement is treated as a funding and verification unit.</p></section>
+<section class="section"><div class="grid">
+{components.map((item, i) => <a class="card" href={`/grace-chapel-plans-projects/components/${item.id}/`}><span class="tag">{String(i+1).padStart(2,'0')} / {item.priority || 'NORMAL'}</span><div><h3>{item.name}</h3><p>{item.product}</p><p class="muted">{item.projectName}</p></div><span class="mono muted">OPEN COMPONENT →</span></a>)}
+</div></section>
+</BaseLayout>
