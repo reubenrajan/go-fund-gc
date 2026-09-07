@@ -1,8 +1,16 @@
 {
   "schema_version": "0.1",
   "currency": "INR",
-  "status": "NOT_CONNECTED",
-  "last_updated": null,
-  "public_note": "Funding figures are not connected to the public site yet. Unknown values are not treated as zero.",
+  "status": "CONNECTED",
+  "last_updated": "2026-09-08",
+  "source_url": "https://docs.google.com/spreadsheets/d/1ZAj6uFvi3zHvT9z9Jvjnj6AIrzoY6DN3EZ-yqLzi7xA/edit?usp=sharing",
+  "public_note": "Latest public aggregate values imported from the Grace Chapel Plans & Projects financial workbook. No donor-level data is published.",
+  "summary": {
+    "known_priced_component_scope_inr": 3519800,
+    "confirmed_funding_inr": 0,
+    "approved_expenditure_inr": 0,
+    "remaining_against_known_priced_scope_inr": 3519800,
+    "financial_completion_percent": 0
+  },
   "components": {}
 }
