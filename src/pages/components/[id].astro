@@ -2,15 +2,15 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import data from '../../data/projects.json';
 import products from '../../data/products.json';
-const { id } = Astro.params;
-const found = data.projects.flatMap(p => p.items.map(item => ({...item, projectId:p.id, projectName:p.name}))).find(x => x.id === id);
-if (!found) throw new Error(`Unknown component: ${id}`);
-const research = products.products.filter(p => p.component_id === id);
+export function getStaticPaths() {
+  return data.projects.flatMap(p => p.items.map(item => ({ params: { id: item.id } })));
+}
+const found = data.projects.flatMap(p => p.items.map(item => ({...item, projectId:p.id, projectName:p.name}))).find(x => x.id === Astro.params.id);
+if (!found) throw new Error(`Unknown component: ${Astro.params.id}`);
+const research = products.products.filter(p => p.component_id === found.id);
+const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout title={`${found.name} — Grace Chapel Plans & Projects`}>
 <section class="detail-head"><div class="eyebrow">COMPONENT / {found.id}</div><h1>{found.name}</h1><p class="muted">{found.projectName} · {found.product}</p></section>
-<section class="detail-grid">
-<div class="panel"><h2>Requirement</h2><div class="facts"><div class="fact"><div class="k">Product / material</div><div class="v">{found.product}</div></div><div class="fact"><div class="k">Quantity</div><div class="v">{found.qty ?? 'Not specified'}</div></div><div class="fact"><div class="k">Budget</div><div class="v">{found.budget_inr != null ? `₹${found.budget_inr.toLocaleString('en-IN')}` : 'Not specified'}</div></div><div class="fact"><div class="k">Priority</div><div class="v">{found.priority || 'NORMAL'}</div></div></div><h2 style="margin-top:32px">Source note</h2><p class="muted">{found.notes || 'No additional source note.'}</p></div>
-<aside class="panel"><h2>Research</h2>{research.length ? research.map(r => <div style="margin-bottom:24px"><span class="tag">{r.status}</span><p><strong>{r.manufacturer}</strong><br/>{r.model}</p><p class="muted">Confidence: {r.confidence}</p><a href={r.source} target="_blank" rel="noreferrer">OFFICIAL SOURCE →</a></div>) : <p class="muted">No independent product research record yet.</p>}</aside>
-</section>
+<section class="detail-grid"><div class="panel"><h2>Requirement</h2><div class="facts"><div class="fact"><div class="k">Product / material</div><div class="v">{found.product}</div></div><div class="fact"><div class="k">Quantity</div><div class="v">{found.qty ?? 'Not specified'}</div></div><div class="fact"><div class="k">Budget</div><div class="v">{found.budget_inr != null ? `₹${found.budget_inr.toLocaleString('en-IN')}` : 'Not specified'}</div></div><div class="fact"><div class="k">Priority</div><div class="v">{found.priority || 'NORMAL'}</div></div></div><h2 style="margin-top:32px">Source note</h2><p class="muted">{found.notes || 'No additional source note.'}</p></div><aside class="panel"><h2>Research</h2>{research.length ? research.map(r => <div style="margin-bottom:24px"><span class="tag">{r.status}</span><p><strong>{r.manufacturer}</strong><br/>{r.model}</p><p class="muted">Confidence: {r.confidence}</p><a href={r.source} target="_blank" rel="noreferrer">OFFICIAL SOURCE →</a></div>) : <p class="muted">No independent product research record yet.</p>}</aside></section>
 </BaseLayout>
