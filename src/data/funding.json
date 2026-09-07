@@ -1,0 +1,8 @@
+{
+  "schema_version": "0.1",
+  "currency": "INR",
+  "status": "NOT_CONNECTED",
+  "last_updated": null,
+  "public_note": "Funding figures are not connected to the public site yet. Unknown values are not treated as zero.",
+  "components": {}
+}
