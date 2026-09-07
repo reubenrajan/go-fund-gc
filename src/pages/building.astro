@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import data from '../data/projects.json';
+const building = data.projects.find(p => p.id === 'church-building');
+const systems = data.projects.filter(p => ['sound-system','videography','media','air-cooling','power','security-system'].includes(p.id));
+---
+<BaseLayout title="Kannuru Campus — Grace Chapel Plans & Projects">
+<section class="detail-head"><div class="eyebrow">KANNURU CAMPUS / BUILDING MODEL</div><h1>THE BUILDING</h1><p class="muted">A project map is the next visual layer. For now, the model exposes the systems and building works that are already defined in the source programme.</p></section>
+<section class="section"><h2>Campus systems</h2><div class="grid">{systems.map((p,i)=><a class="card" href={`/grace-chapel-plans-projects/projects/${p.id}/`}><span class="tag">ZONE {String(i+1).padStart(2,'0')}</span><h3>{p.name}</h3><p>{p.phase}</p><span class="mono muted">VIEW PROJECT →</span></a>)}</div></section>
+<section class="section"><h2>Building works</h2><div class="grid">{building.items.map(item=><a class="card" href={`/grace-chapel-plans-projects/components/${item.id}/`}><span class="tag">BUILDING</span><h3>{item.name}</h3><p>{item.product}</p><span class="mono muted">VIEW COMPONENT →</span></a>)}</div></section>
+<section class="section"><h2>Next visual layer</h2><p class="muted">The production floor plan will add building, floor, zone and component coordinates. It will support filtering by system and accessible alternatives to the visual map.</p></section>
+</BaseLayout>
