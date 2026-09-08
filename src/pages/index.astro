@@ -7,124 +7,128 @@ import { formatInr } from '../lib/progress.js';
 
 const projects = projectData.projects;
 const products = productData.products;
-const pricedItems = projects.flatMap(p => p.items).filter(x => x.budget_inr != null);
-const componentCount = projects.reduce((n, p) => n + p.items.length, 0);
-const priorityCount = projects.flatMap(p => p.items).filter(x => x.priority === 'PRIORITY').length;
-const researchCount = products.length;
-const scope = funding.summary?.known_priced_component_scope_inr ?? pricedItems.reduce((sum, x) => sum + x.budget_inr, 0);
-const raised = funding.summary?.confirmed_funding_inr ?? 0;
-const expenditure = funding.summary?.approved_expenditure_inr ?? 0;
-const remaining = funding.summary?.remaining_against_known_priced_scope_inr ?? Math.max(scope - raised, 0);
-const completion = funding.summary?.financial_completion_percent ?? 0;
-const fmt = (v) => formatInr(v);
+const fmt = (value) => formatInr(value);
+const allPriced = projects.flatMap((p) => p.items).filter((x) => x.budget_inr != null);
+const overallTarget = allPriced.filter((x) => !x.id.startsWith('power-') && !x.id.startsWith('future-')).reduce((sum, x) => sum + x.budget_inr, 0);
+const productByComponent = products.reduce((map, product) => {
+  if (!map[product.component_id]) map[product.component_id] = [];
+  map[product.component_id].push(product);
+  return map;
+}, {});
+const fundingSlices = [
+  { label: 'Sound System', project: 'sound-system' },
+  { label: 'Videography', project: 'videography' },
+  { label: 'Media', project: 'media' },
+  { label: 'Air Cooling System', project: 'air-cooling' },
+  { label: 'Security System', project: 'security-system' },
+  { label: 'Church Building — Storage Room', project: 'church-building', filter: (item) => item.id === 'building-storage-room' },
+  { label: 'Church Building — Roofing', project: 'church-building', filter: (item) => item.group === 'roofing' },
+  { label: 'Church Building — Flooring', project: 'church-building', filter: (item) => item.group === 'flooring' }
+];
+const sliceTarget = (slice) => {
+  const project = projects.find((p) => p.id === slice.project);
+  return (project?.items ?? []).filter(slice.filter ?? (() => true)).reduce((sum, item) => sum + (item.budget_inr ?? 0), 0);
+};
+const church = projects.find((p) => p.id === 'church-building');
+const churchGroups = [
+  { title: 'Storage Room', subtitle: 'A practical storage space outside the church building.', items: church?.items.filter((i) => i.id === 'building-storage-room') ?? [] },
+  { title: 'Roofing', subtitle: 'Roofing work with ceiling and insulation improvements.', items: church?.items.filter((i) => i.group === 'roofing') ?? [] },
+  { title: 'Flooring', subtitle: 'Flooring for the church spaces, including the Children’s Church.', items: church?.items.filter((i) => i.group === 'flooring') ?? [] }
+];
 ---
-<BaseLayout title="Grace Chapel — Plans & Projects" description="Single-page project, component, research and financial view for the Grace Chapel Kannuru campus.">
+<BaseLayout title="Grace Chapel — Plans & Projects" description="Explore Grace Chapel Kannuru campus projects and consider supporting them as the Lord leads.">
 <style>
-  .spa-nav{position:sticky;top:0;z-index:20;background:#000;border-bottom:1px solid #292929;padding:10px 0;display:flex;gap:8px;overflow:auto}.spa-nav a{white-space:nowrap;border:1px solid #333;padding:8px 10px;font:10px ui-monospace,SFMono-Regular,Menlo,monospace;text-decoration:none;color:#aaa}.spa-nav a:hover,.spa-nav a:focus{background:#fff;color:#000}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.toolbar input,.toolbar select{background:#000;color:#fff;border:1px solid #444;padding:12px;font:12px ui-monospace,SFMono-Regular,Menlo,monospace}.toolbar input{min-width:260px;flex:1}.project-section{scroll-margin-top:80px}.project-block{border:1px solid #292929;margin:18px 0;background:#000}.project-block>header{padding:20px;border-bottom:1px solid #292929;display:flex;justify-content:space-between;gap:20px;align-items:start}.project-block h3{font-size:32px;margin:0 0 8px;letter-spacing:-.04em}.project-meta{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#999;text-transform:uppercase}.component{border-bottom:1px solid #202020;padding:20px}.component:last-child{border-bottom:0}.component-grid{display:grid;grid-template-columns:1.4fr .8fr .7fr;gap:20px}.component h4{font-size:20px;margin:0 0 8px}.component .product{color:#bbb;margin-bottom:8px}.specs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.spec{border:1px solid #333;padding:5px 7px;font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#aaa}.money{font:24px ui-monospace,SFMono-Regular,Menlo,monospace}.small{font-size:12px;color:#999;line-height:1.5}.research{border-left:2px solid #333;padding-left:14px;margin-top:12px}.source{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-all;color:#888}.source a{color:#aaa}.pill{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid #444;padding:5px 7px;color:#aaa}.data-note{border:1px solid #292929;padding:18px;color:#aaa;font-size:13px;line-height:1.55}.product-grid{grid-template-columns:repeat(3,1fr)}.product-card{background:#000;border:1px solid #292929;padding:20px}.product-card h3{font-size:22px;margin:10px 0 5px}.progress{height:5px;background:#222;margin:12px 0}.progress>span{display:block;height:100%;background:#fff}.empty{padding:30px;border:1px dashed #333;color:#888}.topline{display:flex;justify-content:space-between;gap:20px;align-items:end}.source-label{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:#777}.footnote{font-size:11px;color:#777;line-height:1.5}
-  @media(max-width:900px){.component-grid,.product-grid{grid-template-columns:1fr}.project-block>header{display:block}.project-block>header .pill{display:inline-block;margin-top:10px}}
+  .public-nav{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);padding:10px 0;display:flex;gap:8px;overflow:auto}.public-nav a{white-space:nowrap;border:1px solid var(--line);padding:8px 10px;font:10px ui-monospace,SFMono-Regular,Menlo,monospace;text-decoration:none;color:var(--muted)}.public-nav a:hover,.public-nav a:focus{background:var(--text);color:var(--surface)}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}.toolbar input,.toolbar select{background:var(--control);color:var(--text);border:1px solid var(--line);padding:12px;font:12px ui-monospace,SFMono-Regular,Menlo,monospace}.toolbar input{min-width:260px;flex:1}
+  .project-section{scroll-margin-top:84px}.project-block{border:1px solid var(--line);margin:18px 0;background:var(--surface)}.project-block>header{padding:22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:start}.project-block h3{font-size:32px;margin:0 0 8px;letter-spacing:-.04em}.project-meta{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);text-transform:uppercase}
+  .component{padding:24px;border-bottom:1px solid var(--line)}.component:last-child{border-bottom:0}.component-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.component h4{font-size:24px;margin:0 0 8px}.component .product{font-size:15px;color:var(--text-soft);margin-bottom:12px}.small{font-size:12px;color:var(--muted);line-height:1.55}.money{font:24px ui-monospace,SFMono-Regular,Menlo,monospace}.specs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.spec,.pill{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--line);padding:5px 7px;color:var(--muted);text-transform:uppercase}.component-image{width:100%;max-height:280px;object-fit:contain;background:#f5f5f5;border:1px solid var(--line);display:block;margin:14px 0}.image-credit{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted)}
+  .product-single{border:1px solid var(--line);padding:14px}.product-single img{width:100%;height:190px;object-fit:contain;background:#f5f5f5;display:block;margin-bottom:12px}.product-single h5{font-size:17px;margin:0 0 5px}.product-single .source{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);margin-top:12px}.product-single a{text-decoration:underline;text-underline-offset:4px}
+  .alternatives{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.alternative{border:1px solid var(--line);background:var(--surface);overflow:hidden}.alternative img{width:100%;height:220px;object-fit:contain;background:#f5f5f5;display:block}.alternative-body{padding:14px}.alternative h5{font-size:19px;margin:0 0 4px}.alternative summary{cursor:pointer;font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);text-transform:uppercase;margin-top:12px}.alternative ul{margin:12px 0 0;padding-left:18px;color:var(--text-soft);font-size:12px;line-height:1.55}.alternative .source{font:10px ui-monospace,SFMono-Regular,Menlo,monospace;margin-top:12px}
+  .funding-intro{max-width:850px;color:var(--text-soft);font-size:18px;line-height:1.6}.macro-funding{border:1px solid var(--line);padding:28px;margin-top:24px}.funding-head{display:flex;justify-content:space-between;gap:20px;align-items:end}.funding-title{font-size:34px;letter-spacing:-.04em;margin:0}.funding-amount{font:28px ui-monospace,SFMono-Regular,Menlo,monospace}.funding-track{height:12px;background:var(--line);margin:22px 0 12px;position:relative;overflow:hidden}.funding-fill{height:100%;width:0;background:var(--text)}.funding-track.unknown:after{content:'FUNDING DETAILS WILL BE UPDATED';position:absolute;inset:0;display:grid;place-items:center;font:9px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted);letter-spacing:.08em}.micro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:18px}.micro-funding{background:var(--surface);padding:20px}.micro-funding h4{font-size:18px;margin:0 0 10px}.micro-track{height:7px;background:var(--line);margin:12px 0 8px}.micro-track span{display:block;height:100%;width:0;background:var(--text)}.micro-meta{display:flex;justify-content:space-between;gap:12px;font:10px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--muted)}
+  .church-group{border:1px solid var(--line);margin-top:16px}.church-group>header{padding:20px;border-bottom:1px solid var(--line)}.church-group h3{margin:0 0 6px;font-size:25px}.material-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line)}.material{background:var(--surface);padding:18px}.material img{width:100%;height:190px;object-fit:cover;background:#f5f5f5;margin-bottom:12px}.material h4{font-size:18px;margin:0 0 6px}.material .price{font:20px ui-monospace,SFMono-Regular,Menlo,monospace}
+  .future-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.future-card{background:var(--surface);padding:20px;min-height:150px}.future-card h3{font-size:22px;margin:12px 0 8px}.cta{display:flex;justify-content:space-between;align-items:end;gap:40px}.body-copy{font-size:19px;line-height:1.65;color:var(--text-soft);max-width:760px}.button-row{display:flex;gap:10px;flex-wrap:wrap}.empty{padding:30px;border:1px dashed var(--line);color:var(--muted)}
+  @media(max-width:900px){.component-grid,.alternatives,.micro-grid,.material-grid,.future-grid{grid-template-columns:1fr}.project-block>header{display:block}.cta{display:block}.cta .button-row{margin-top:28px}}
 </style>
 
 <section class="hero" id="top">
-  <div class="eyebrow">001 / KANNURU CAMPUS / SINGLE-PAGE PROGRAMME SYSTEM</div>
+  <div class="eyebrow">GRACE CHAPEL / KANNURU CAMPUS</div>
   <div class="hero-grid">
     <div>
-      <h1>SEE THE BUILDING.<br />UNDERSTAND THE PROJECT.</h1>
-      <p class="lede">The complete Grace Chapel Plans & Projects register in one page: projects, components, budgets, priorities, product research, financial status and future vision.</p>
+      <h1>HELP BUILD<br />THE HOUSE.</h1>
+      <p class="lede">See what Grace Chapel is working towards at Kannuru — from sound and media to cooling, security and the church building itself. If the Lord leads you, you can help fund a part of a project or an entire project.</p>
+      <div class="hero-actions"><a class="button primary" href="#funding">SEE WHAT YOU CAN SUPPORT ↓</a><a class="button" href="#projects">EXPLORE THE WORK ↓</a></div>
     </div>
     <div class="hero-mark" aria-hidden="true"><div class="crosshair"></div><span>GC / K</span></div>
   </div>
 </section>
 
-<nav class="spa-nav" aria-label="Page sections">
-  <a href="#dashboard">DASHBOARD</a><a href="#projects">PROJECTS</a><a href="#components">COMPONENTS</a><a href="#research">RESEARCH</a><a href="#finance">FINANCE</a><a href="#future">FUTURE</a><a href="#involvement">GET INVOLVED</a>
-</nav>
+<nav class="public-nav" aria-label="Page sections"><a href="#funding">FUNDING</a><a href="#projects">PROJECTS</a><a href="#building">CHURCH BUILDING</a><a href="#future">FUTURE</a><a href="#involvement">GET INVOLVED</a></nav>
 
-<section class="section" id="dashboard">
-  <div class="section-head"><div><div class="eyebrow">PROGRAMME DASHBOARD</div><h2>ONE SOURCE OF TRUTH.</h2></div><span class="mono muted">DATA {funding.last_updated ?? '—'}</span></div>
-  <div class="metrics">
-    <div class="metric"><div class="label">Programme areas</div><div class="value">{projects.length}</div><div class="muted">Active systems, building work and future vision</div></div>
-    <div class="metric"><div class="label">Components</div><div class="value">{componentCount}</div><div class="muted">Defined requirements</div></div>
-    <div class="metric"><div class="label">Known priced scope</div><div class="value">{fmt(scope)}</div><div class="muted">Spreadsheet aggregate</div></div>
-    <div class="metric"><div class="label">Financial completion</div><div class="value">{completion}%</div><div class="muted">Confirmed funding against known priced scope</div></div>
+<section class="section project-section" id="funding">
+  <div class="section-head"><div><div class="eyebrow">YOUR GIVING CAN HELP</div><h2>OVERALL PROJECT FUNDING</h2></div><span class="mono muted">{fmt(overallTarget)} PRICED ITEMS</span></div>
+  <p class="funding-intro">Every project can be supported in part or in full. We invite you to prayerfully consider where the Lord may be leading you to help. The amounts below reflect the project plans; confirmed giving will be added as it is reconciled.</p>
+  <div class="macro-funding">
+    <div class="funding-head"><div><div class="eyebrow">OVERALL</div><h3 class="funding-title">Kannuru Plans & Projects</h3></div><div class="funding-amount">{fmt(overallTarget)}</div></div>
+    <div class="funding-track unknown"><div class="funding-fill"></div></div>
+    <div class="micro-meta"><span>Planned amount for currently priced work</span><span>{funding.status}</span></div>
   </div>
-  <div class="facts" style="margin-top:1px">
-    <div class="fact"><div class="k">Confirmed funding</div><div class="v price">{fmt(raised)}</div></div>
-    <div class="fact"><div class="k">Approved expenditure</div><div class="v price">{fmt(expenditure)}</div></div>
-    <div class="fact"><div class="k">Remaining</div><div class="v price">{fmt(remaining)}</div></div>
-    <div class="fact"><div class="k">Priority components</div><div class="v price">{priorityCount}</div></div>
+  <div class="micro-grid">
+    {fundingSlices.map((slice) => <div class="micro-funding"><h4>{slice.label}</h4><div class="micro-meta"><span>Planned</span><strong>{fmt(sliceTarget(slice))}</strong></div><div class="micro-track"><span></span></div><div class="micro-meta"><span>Giving update coming soon</span><span>—</span></div></div>)}
   </div>
-  <p class="footnote">Funding status: {funding.status}. {funding.public_note}</p>
 </section>
 
 <section class="section project-section" id="projects">
-  <div class="section-head"><div><div class="eyebrow">PROJECT REGISTER / 01–08</div><h2>THE PROGRAMME</h2></div><span class="mono muted">ALL DETAILS INLINE</span></div>
-  <div class="toolbar" aria-label="Project filters"><input id="search" type="search" placeholder="SEARCH PROJECTS, COMPONENTS OR PRODUCTS…" aria-label="Search the programme" /><select id="classification" aria-label="Filter by classification"><option value="ALL">ALL CLASSIFICATIONS</option><option value="ACTIVE">ACTIVE</option><option value="VISION">VISION</option></select></div>
+  <div class="section-head"><div><div class="eyebrow">WHAT WE ARE WORKING TOWARDS</div><h2>PROJECTS</h2></div><span class="mono muted">{projects.filter((p) => p.classification !== 'VISION').length} CURRENT AREAS</span></div>
+  <div class="toolbar"><input id="search" type="search" placeholder="Search projects or equipment…" aria-label="Search projects or equipment" /><select id="classification" aria-label="Filter projects"><option value="ALL">ALL</option><option value="ACTIVE">CURRENT</option><option value="VISION">FUTURE</option></select></div>
   <div id="project-list">
     {projects.map((project, i) => <article class="project-block" data-project={project.name.toLowerCase()} data-classification={project.classification}>
-      <header><div><div class="eyebrow">{String(i+1).padStart(2,'0')} / {project.classification}</div><h3>{project.name}</h3><div class="project-meta">{project.phase} · {project.items.length} components</div></div><span class="pill">{project.classification}</span></header>
-      {project.items.map((item) => <div class="component" data-search={`${item.name} ${item.product} ${item.notes}`.toLowerCase()}>
+      <header><div><div class="eyebrow">{String(i + 1).padStart(2, '0')}</div><h3>{project.name}</h3><div class="project-meta">{project.phase}</div></div><span class="pill">{project.classification === 'VISION' ? 'FUTURE' : 'CURRENT'}</span></header>
+      {project.id !== 'church-building' && project.items.map((item) => <div class="component" data-search={`${item.name} ${item.product} ${item.notes}`.toLowerCase()}>
         <div class="component-grid">
-          <div><h4>{item.name}</h4><div class="product">{item.product}</div><div class="small">ID: <span class="mono">{item.id}</span></div>{item.notes && <div class="small">{item.notes}</div>}
-            <div class="specs"><span class="spec">QTY {item.qty ?? '—'}</span>{item.priority && <span class="spec">{item.priority}</span>}<span class="spec">{item.confidence}</span></div>
-          </div>
-          <div><div class="label">Budget</div><div class="money">{item.budget_inr != null ? fmt(item.budget_inr) : '—'}</div><div class="small">Unknown values remain unknown.</div></div>
-          <div><div class="label">Research</div>{products.filter(p => p.component_id === item.id).map(p => <div class="research"><div><span class="pill">{p.status}</span> <span class="pill">{p.confidence}</span></div><div class="small">{p.manufacturer}<br />{p.model}</div><div class="specs">{Object.entries(p.verified_specs ?? {}).map(([k,v]) => <span class="spec">{k}: {v}</span>)}</div><div class="source"><a href={p.source} target="_blank" rel="noreferrer">SOURCE ↗</a></div></div>)}{!products.some(p => p.component_id === item.id) && <div class="small">No product research record.</div>}</div>
+          <div><h4>{item.name}</h4><div class="product">{item.product}</div>{item.notes && <p class="small">{item.notes}</p>}<div class="specs"><span class="spec">{item.qty ?? '—'} ×</span>{item.priority && <span class="spec">{item.priority}</span>}</div>{item.budget_inr != null && <div style="margin-top:18px"><div class="eyebrow">Planned amount</div><div class="money">{fmt(item.budget_inr)}</div></div>}</div>
+          <div>{(productByComponent[item.id] ?? []).length === 2 ? <div><div class="eyebrow">Choose between the listed options</div><div class="alternatives">{productByComponent[item.id].map((p) => <article class="alternative"><img src={p.image_url} alt={`${p.manufacturer} ${p.model}`} loading="lazy" referrerpolicy="no-referrer" /><div class="alternative-body"><h5>{p.manufacturer}<br />{p.model}</h5><span class="pill">ALTERNATIVE</span><details><summary>SEE KEY DIFFERENCES</summary><ul>{Object.entries(p.verified_specs ?? {}).filter(([k]) => k !== 'differentiator').map(([k,v]) => <li><strong>{k.replaceAll('_',' ')}:</strong> {v}</li>)}{p.verified_specs?.differentiator && <li><strong>Why it may suit:</strong> {p.verified_specs.differentiator}</li>}</ul></details><div class="source"><a href={p.source} target="_blank" rel="noreferrer">VIEW PRODUCT ↗</a></div></div></article>)}</div></div> : (productByComponent[item.id] ?? []).map((p) => <div class="product-single"><img src={p.image_url} alt={`${p.manufacturer} ${p.model}`} loading="lazy" referrerpolicy="no-referrer" /><h5>{p.manufacturer} / {p.model}</h5><div class="specs">{Object.entries(p.verified_specs ?? {}).map(([k,v]) => <span class="spec">{k.replaceAll('_',' ')}: {v}</span>)}</div><div class="source"><a href={p.source} target="_blank" rel="noreferrer">VIEW PRODUCT ↗</a></div></div>)}</div>
         </div>
       </div>)}
     </article>)}
   </div>
-  <div id="empty" class="empty" hidden>No matching project or component.</div>
+  <div id="empty" class="empty" hidden>No matching project or equipment found.</div>
 </section>
 
-<section class="section project-section" id="components">
-  <div class="section-head"><div><div class="eyebrow">COMPONENT REGISTER</div><h2>TRACEABLE UNITS.</h2></div><span class="mono muted">{componentCount} COMPONENTS</span></div>
-  <div class="grid">
-    {projects.flatMap(p => p.items.map(item => ({...item, project:p.name, classification:p.classification}))).map(item => <div class="card"><div class="card-top"><span class="tag">{item.id}</span><span class="status">{item.classification}</span></div><div><h3>{item.name}</h3><p>{item.project}</p><p>{item.product}</p></div><div class="card-foot"><span>{item.budget_inr != null ? fmt(item.budget_inr) : 'UNPRICED'}</span><span>{item.priority ?? 'NORMAL'}</span></div></div>)}
-  </div>
-</section>
-
-<section class="section project-section" id="research">
-  <div class="section-head"><div><div class="eyebrow">PRODUCT RESEARCH</div><h2>VERIFIED WHERE POSSIBLE.</h2></div><span class="mono muted">{researchCount} RESEARCH RECORDS</span></div>
-  <div class="grid product-grid">
-    {products.map(p => <article class="product-card"><div class="card-top"><span class="pill">{p.status}</span><span class="status">{p.confidence}</span></div><h3>{p.manufacturer} / {p.model}</h3><p class="small">Component: {p.component_id}</p><div class="specs">{Object.entries(p.verified_specs ?? {}).map(([k,v]) => <span class="spec">{k}: {v}</span>)}</div><p class="source"><a href={p.source} target="_blank" rel="noreferrer">OFFICIAL SOURCE ↗</a></p></article>)}
-  </div>
-</section>
-
-<section class="section project-section" id="finance">
-  <div class="section-head"><div><div class="eyebrow">FINANCIAL TRANSPARENCY</div><h2>THE NUMBERS.</h2></div><span class="mono muted">PUBLIC AGGREGATES ONLY</span></div>
-  <div class="detail-grid">
-    <div class="panel"><h2>Funding snapshot</h2><div class="facts"><div class="fact"><div class="k">Known priced component scope</div><div class="v price">{fmt(scope)}</div></div><div class="fact"><div class="k">Confirmed funding</div><div class="v price">{fmt(raised)}</div></div><div class="fact"><div class="k">Remaining</div><div class="v price">{fmt(remaining)}</div></div><div class="fact"><div class="k">Completion</div><div class="v price">{completion}%</div></div></div><div class="progress"><span style={`width:${Math.min(100, Math.max(0, completion))}%`}></span></div></div>
-    <div class="panel"><h2>Source</h2><p class="small">Last imported: {funding.last_updated ?? '—'}</p><p class="source"><a href={funding.source_url} target="_blank" rel="noreferrer">OPEN FINANCIAL WORKBOOK ↗</a></p><p class="data-note">No donor-level transactions are published. The public site carries aggregate values only.</p></div>
-  </div>
+<section class="section project-section" id="building">
+  <div class="section-head"><div><div class="eyebrow">GRACE CHAPEL KANNURU CAMPUS</div><h2>CHURCH BUILDING</h2></div><span class="mono muted">SPACE / CARE / WELCOME</span></div>
+  <p class="funding-intro">The building work is about making the church a better place to worship, serve, teach and welcome people. You can help with a complete area or contribute towards a particular part of it.</p>
+  {churchGroups.map((group) => <article class="church-group"><header><div class="eyebrow">CHURCH BUILDING</div><h3>{group.title}</h3><p class="small">{group.subtitle}</p></header><div class="material-grid">
+    {group.items.map((item) => <div class="material">{item.image_url && <img src={item.image_url} alt={item.name} loading="lazy" referrerpolicy="no-referrer" />}<h4>{item.name}</h4><p class="small">{item.product}</p>{item.budget_inr != null && <div class="price">{fmt(item.budget_inr)}</div>}{item.notes && <p class="small">{item.notes}</p>}{item.image_source && <div class="image-credit">Image: {item.image_source}</div>}</div>)}
+  </div></article>)}
 </section>
 
 <section class="section project-section" id="future">
-  <div class="section-head"><div><div class="eyebrow">FUTURE PROJECTS / LIMITLESS</div><h2>VISION.</h2></div><span class="mono muted">{projects.find(p => p.id === 'future-projects')?.items.length ?? 0} ITEMS</span></div>
-  <div class="grid">{(projects.find(p => p.id === 'future-projects')?.items ?? []).map(item => <div class="card"><div class="card-top"><span class="tag">VISION</span><span class="status">FUTURE</span></div><div><h3>{item.name}</h3><p>{item.product}</p><p class="small">{item.notes}</p></div><div class="card-foot"><span>NOT PRICED</span><span>—</span></div></div>)}</div>
+  <div class="section-head"><div><div class="eyebrow">LOOKING AHEAD</div><h2>FUTURE PROJECTS</h2></div><span class="mono muted">LIMITLESS</span></div>
+  <p class="funding-intro">There are also hopes for the future — ideas that may take shape as God provides the opportunity, resources and direction.</p>
+  <div class="future-grid">{(projects.find((p) => p.id === 'future-projects')?.items ?? []).map((item) => <article class="future-card"><div class="eyebrow">FUTURE</div><h3>{item.name}</h3><p class="small">{item.notes}</p></article>)}</div>
 </section>
 
-<section class="section cta project-section" id="involvement"><div><div class="eyebrow">GET INVOLVED</div><h2>BUILD A PIECE<br />OF THE WORK.</h2><p class="body-copy">Support a defined component, support a project, give equipment, volunteer or connect with Grace Chapel.</p></div><div class="hero-actions"><a class="button primary" href="mailto:info@gracechapel.org.in">CONTACT GRACE CHAPEL →</a><a class="button" href="#projects">EXPLORE PROJECTS ↑</a></div></section>
+<section class="section cta project-section" id="involvement"><div><div class="eyebrow">PRAYERFULLY CONSIDER</div><h2>COULD YOU HELP?</h2><p class="body-copy">If the Lord leads you, you are welcome to consider funding part of a project, funding an entire project, giving equipment, volunteering your skills, or simply praying with us for the work.</p></div><div class="button-row"><a class="button primary" href="mailto:info@gracechapel.org.in?subject=Plans%20%26%20Projects%20-%20I%20would%20like%20to%20help">I WOULD LIKE TO HELP →</a><a class="button" href="https://www.gracechapel.org.in/" target="_blank" rel="noreferrer">VISIT GRACE CHAPEL ↗</a></div></section>
 
-<script type="application/json" id="gc-data" set:html={JSON.stringify({projects, products, funding})}></script>
 <script>
   const search = document.querySelector('#search');
   const classification = document.querySelector('#classification');
   const empty = document.querySelector('#empty');
   const blocks = [...document.querySelectorAll('.project-block[data-project]')];
-  function filter(){
+  function filterProjects() {
     const q = (search?.value || '').trim().toLowerCase();
     const c = classification?.value || 'ALL';
     let visible = 0;
-    blocks.forEach(block => {
-      const matchClass = c === 'ALL' || block.dataset.classification === c;
-      const matchText = !q || block.dataset.project.includes(q) || [...block.querySelectorAll('.component')].some(x => x.dataset.search.includes(q));
-      const show = matchClass && matchText;
+    blocks.forEach((block) => {
+      const classMatch = c === 'ALL' || block.dataset.classification === c;
+      const textMatch = !q || block.dataset.project.includes(q) || [...block.querySelectorAll('[data-search]')].some((item) => item.dataset.search.includes(q));
+      const show = classMatch && textMatch;
       block.hidden = !show;
-      if(show) visible++;
+      if (show) visible += 1;
     });
-    if(empty) empty.hidden = visible !== 0;
+    if (empty) empty.hidden = visible !== 0;
   }
-  search?.addEventListener('input', filter);
-  classification?.addEventListener('change', filter);
+  search?.addEventListener('input', filterProjects);
+  classification?.addEventListener('change', filterProjects);
 </script>
 </BaseLayout>
