@@ -7,6 +7,58 @@ const base = import.meta.env.BASE_URL;
 <html lang="en">
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><meta name="description" content={description} /><title>{title}</title>
+<script is:inline>
+  (() => {
+    try {
+      const saved = localStorage.getItem('gc-theme');
+      const theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = theme;
+    } catch {}
+  })();
+</script>
 </head>
-<body><div class="shell"><header class="topbar"><a href={`${base}#top`}>GRACE CHAPEL / PLANS & PROJECTS</a><nav class="nav" aria-label="Primary"><a href={`${base}#projects`}>PROJECTS</a><a href={`${base}#components`}>COMPONENTS</a><a href={`${base}#research`}>RESEARCH</a><a href={`${base}#finance`}>FINANCE</a><a href={`${base}#involvement`}>GET INVOLVED</a></nav></header><main><slot /></main><footer class="footer">GRACE CHAPEL · KANNURU CAMPUS · PLANS & PROJECTS · SINGLE PAGE</footer></div></body>
+<body><div class="shell"><header class="topbar"><a href={`${base}#top`}>GRACE CHAPEL / PLANS & PROJECTS</a><nav class="nav" aria-label="Primary"><a href={`${base}#projects`}>PROJECTS</a><a href={`${base}#components`}>COMPONENTS</a><a href={`${base}#research`}>RESEARCH</a><a href={`${base}#finance`}>FINANCE</a><a href={`${base}#involvement`}>GET INVOLVED</a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch colour theme">LIGHT MODE</button></nav></header><main><slot /></main><footer class="footer">GRACE CHAPEL · KANNURU CAMPUS · PLANS & PROJECTS · SINGLE PAGE</footer></div>
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const button = document.querySelector('#theme-toggle');
+    const setTheme = (theme) => {
+      root.dataset.theme = theme;
+      try { localStorage.setItem('gc-theme', theme); } catch {}
+      if (button) {
+        const light = theme === 'light';
+        button.textContent = light ? 'DARK MODE' : 'LIGHT MODE';
+        button.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+      }
+    };
+    setTheme(root.dataset.theme || 'dark');
+    button?.addEventListener('click', () => setTheme(root.dataset.theme === 'light' ? 'dark' : 'light'));
+
+    const productImages = {
+      'Canon / XA60': ['/img/canon-xa60.svg', 'Canon XA60'],
+      'Roland / KC-80': ['/img/roland-kc80.svg', 'Roland KC-80'],
+      'DPA Microphones / 4488 CORE Directional Headset Mic': ['/img/dpa-4488.svg', 'DPA 4488 CORE Directional Headset Mic'],
+      'Apple / MacBook Pro 14-inch, M4': ['/img/apple-macbook-pro-14-m4.svg', 'Apple MacBook Pro 14-inch M4'],
+      'JBL Professional / PRX912': ['/img/jbl-prx912.svg', 'JBL Professional PRX912'],
+      'Yamaha / DBR15': ['/img/yamaha-dbr15.svg', 'Yamaha DBR15'],
+      'JBL Professional / PRX915XLF': ['/img/jbl-prx915xlf.svg', 'JBL Professional PRX915XLF'],
+      'Yamaha / DXS18': ['/img/yamaha-dxs18.svg', 'Yamaha DXS18'],
+      'WAVLINK / Not established': ['/img/wavlink-wl-ug69pd2.svg', 'WAVLINK WL-UG69PD2 / Pro']
+    };
+    document.querySelectorAll('.product-card').forEach((card) => {
+      const heading = card.querySelector('h3');
+      if (!heading || card.querySelector('.product-image')) return;
+      const key = heading.textContent.trim();
+      const asset = productImages[key];
+      if (!asset) return;
+      const img = document.createElement('img');
+      img.className = 'product-image';
+      img.src = asset[0];
+      img.alt = asset[1];
+      img.loading = 'lazy';
+      heading.before(img);
+    });
+  })();
+</script>
+</body>
 </html>
