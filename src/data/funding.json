@@ -1,16 +1,24 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "currency": "INR",
-  "status": "CONNECTED",
+  "status": "PARTIAL",
   "last_updated": "2026-09-08",
-  "source_url": "https://docs.google.com/spreadsheets/d/1ZAj6uFvi3zHvT9z9Jvjnj6AIrzoY6DN3EZ-yqLzi7xA/edit?usp=sharing",
-  "public_note": "Latest public aggregate values imported from the Grace Chapel Plans & Projects financial workbook. No donor-level data is published.",
+  "source_url": "https://sites.google.com/gracechapel.org.in/grace-chapel-plans-projects/home",
+  "public_note": "Planned costs are taken from the Grace Chapel Plans & Projects source. Funding is shown only where a confirmed payment figure or percentage is available. No donor-level data is published.",
   "summary": {
-    "known_priced_component_scope_inr": 3519800,
-    "confirmed_funding_inr": 0,
-    "approved_expenditure_inr": 0,
-    "remaining_against_known_priced_scope_inr": 3519800,
-    "financial_completion_percent": 0
+    "phase_1_priced_inr": 730000,
+    "current_priced_work_excluding_power_options_inr": 2049800,
+    "power_option_range_inr": [690000, 780000],
+    "future_phase_priced_inr": 0,
+    "future_phase_note": "Future Projects are listed without costs on the source page.",
+    "overall_confirmed_amount_inr": null,
+    "overall_financial_completion_percent": null
   },
-  "components": {}
+  "components": {
+    "cooling-evaporative-cooler": {
+      "confirmed_percent": 27.5,
+      "confirmed_amount_inr": null,
+      "note": "27.5% paid; total project cost is not supplied on the source page."
+    }
+  }
 }
