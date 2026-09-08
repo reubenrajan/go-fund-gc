@@ -1,26 +1,26 @@
 {
-  "schema_version": "0.1",
+  "schema_version": "0.2",
   "currency": "INR",
   "source_url": "https://sites.google.com/gracechapel.org.in/grace-chapel-plans-projects/home",
   "projects": [
     {"id":"sound-system","name":"Sound System","phase":"Phase 1 Upgrade","classification":"ACTIVE","items":[
-      {"id":"sound-full-range-speakers","name":"Full-range speakers","product":"JBL PRX 912/915 or Yamaha DBR 15","qty":2,"budget_inr":115000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative products listed; selection not established."},
-      {"id":"sound-subwoofers","name":"Subwoofers","product":"JBL PRX 915 XLF or Yamaha DXS 18","qty":2,"budget_inr":200000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative products listed; selection not established."},
+      {"id":"sound-full-range-speakers","name":"Full-range speakers","product":"JBL PRX 912/915 or Yamaha DBR 15","qty":2,"budget_inr":115000,"priority":null,"confidence":"EXPLICIT","notes":"Two alternatives are shown below; the final selection is not established."},
+      {"id":"sound-subwoofers","name":"Subwoofers","product":"JBL PRX 915 XLF or Yamaha DXS 18","qty":2,"budget_inr":200000,"priority":null,"confidence":"EXPLICIT","notes":"Two alternatives are shown below; the final selection is not established."},
       {"id":"sound-drum-shield","name":"Drum Shield","product":"8 mm imported Korean transparent acrylic","qty":5,"budget_inr":50000,"priority":"PRIORITY","confidence":"EXPLICIT","notes":"Five frames."},
       {"id":"sound-keyboard-amp","name":"Keyboard Amp","product":"Roland KC-80","qty":1,"budget_inr":45000,"priority":null,"confidence":"EXPLICIT","notes":""},
       {"id":"sound-head-worn-mic","name":"Head worn mic","product":"DPA 4488","qty":1,"budget_inr":100000,"priority":null,"confidence":"EXPLICIT","notes":""},
-      {"id":"sound-other","name":"Other","product":"Cabling, servicing, connectors etc.","qty":1,"budget_inr":50000,"priority":null,"confidence":"EXPLICIT","notes":"Aggregate line item; not a single product."}
+      {"id":"sound-other","name":"Other","product":"Cabling, servicing, connectors etc.","qty":1,"budget_inr":50000,"priority":null,"confidence":"EXPLICIT","notes":"Aggregate line item."}
     ]},
     {"id":"videography","name":"Videography","phase":"Phase 1 Upgrade","classification":"ACTIVE","items":[
       {"id":"video-camera","name":"Camera","product":"Canon XA60","qty":1,"budget_inr":115000,"priority":null,"confidence":"EXPLICIT","notes":"Streaming-ready 4K camera; exact procurement configuration not independently confirmed."},
-      {"id":"video-tripod","name":"Tripod","product":"E-image / Manfrotto","qty":1,"budget_inr":13000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative manufacturers listed; selection not established."},
-      {"id":"video-wireless-hdmi","name":"Wireless HDMI","product":"Hollyland / Swift","qty":1,"budget_inr":32000,"priority":null,"confidence":"EXPLICIT","notes":"Alternative manufacturers listed; selection not established."},
+      {"id":"video-tripod","name":"Tripod","product":"E-image / Manfrotto","qty":1,"budget_inr":13000,"priority":null,"confidence":"EXPLICIT","notes":"Two alternatives are shown below; the final selection is not established."},
+      {"id":"video-wireless-hdmi","name":"Wireless HDMI","product":"Hollyland / Swift","qty":1,"budget_inr":32000,"priority":null,"confidence":"EXPLICIT","notes":"Two alternatives are shown below; the final selection is not established."},
       {"id":"video-sd-card","name":"SD Card","product":"Sony Tough SD Card","qty":1,"budget_inr":10000,"priority":null,"confidence":"EXPLICIT","notes":"Exact capacity/model not specified."}
     ]},
     {"id":"media","name":"Media","phase":"Shoot / Edit / Broadcast","classification":"ACTIVE","items":[
       {"id":"media-macbook","name":"Laptop","product":"MacBook Pro 14 in M4","qty":1,"budget_inr":240000,"priority":"PRIORITY","confidence":"EXPLICIT","notes":""},
-      {"id":"media-dock","name":"Display dock","product":"WAVLINK display dock","qty":1,"budget_inr":23000,"priority":"PRIORITY","confidence":"EXPLICIT","notes":"Exact model not specified."},
-      {"id":"media-atem","name":"Live streaming switcher","product":"ATEM Mini ISO G2","qty":1,"budget_inr":209800,"priority":null,"confidence":"EXPLICIT","notes":"Exact product naming needs reconciliation against procurement source."}
+      {"id":"media-dock","name":"Display dock","product":"WAVLINK display dock","qty":1,"budget_inr":23000,"priority":"PRIORITY","confidence":"EXPLICIT","notes":"The exact model is still being confirmed."},
+      {"id":"media-atem","name":"Live streaming switcher","product":"ATEM Mini ISO G2","qty":1,"budget_inr":209800,"priority":null,"confidence":"EXPLICIT","notes":"Exact product naming needs reconciliation against the procurement source."}
     ]},
     {"id":"air-cooling","name":"Air Cooling System","phase":"Evaporative Air Coolers","classification":"ACTIVE","items":[
       {"id":"cooling-evaporative-cooler","name":"Evaporative air cooler","product":"CY-18TA/DA Model","qty":1,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"10,200 CFM; 12-speed motor; Auto Drain; Chill Cell Pad; UV-protected shell."}
@@ -34,13 +34,13 @@
     ]},
     {"id":"church-building","name":"Church Building","phase":"Grace Chapel Kannuru Campus","classification":"ACTIVE","items":[
       {"id":"building-storage-room","name":"Storage room","product":"Built outside","qty":1,"budget_inr":null,"priority":"PRIORITY","confidence":"EXPLICIT","notes":""},
-      {"id":"building-roofing","name":"Roofing solutions","product":"Not specified","qty":1,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Scope exists but material/system is not specified."},
-      {"id":"building-false-ceiling","name":"False Ceiling","product":"Not specified","qty":1,"budget_inr":200000,"priority":null,"confidence":"EXPLICIT","notes":""},
-      {"id":"building-xlpe-insulation","name":"XLPE Sheet insulation","product":"XLPE Sheet","qty":1,"budget_inr":152000,"priority":null,"confidence":"EXPLICIT","notes":""},
-      {"id":"building-ceramic-tiles","name":"Ceramic tiles","product":"Ceramic tiles","qty":1,"budget_inr":270000,"priority":null,"confidence":"EXPLICIT","notes":""},
-      {"id":"building-vinyl-flooring","name":"Vinyl flooring","product":"Vinyl flooring","qty":1,"budget_inr":80000,"priority":null,"confidence":"EXPLICIT","notes":""},
-      {"id":"building-clay-tiles","name":"Clay tiles","product":"Clay tiles","qty":1,"budget_inr":100000,"priority":null,"confidence":"EXPLICIT","notes":""},
-      {"id":"building-children-flooring","name":"Children Church flooring","product":"Grass Mat","qty":1,"budget_inr":null,"priority":"PRIORITY","confidence":"EXPLICIT","notes":"Budget not supplied."}
+      {"id":"building-roofing","name":"Roofing solutions","product":"Not specified","qty":1,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"The roofing work includes the ceiling and insulation items below.","group":"roofing"},
+      {"id":"building-false-ceiling","name":"False Ceiling","product":"Not specified","qty":1,"budget_inr":200000,"priority":null,"confidence":"EXPLICIT","notes":"","group":"roofing","image_url":"https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/sites/2/2025/10/23152231/gypsum-false-ceiling.jpg","image_source":"Livspace"},
+      {"id":"building-xlpe-insulation","name":"XLPE Sheet insulation","product":"XLPE Sheet","qty":1,"budget_inr":152000,"priority":null,"confidence":"EXPLICIT","notes":"","group":"roofing","image_url":"https://aerolam.com/wp-content/uploads/2025/05/Aerolam-XLPE-Rolls-and-Sheets.png","image_source":"Aerolam"},
+      {"id":"building-ceramic-tiles","name":"Ceramic tiles","product":"Ceramic tiles","qty":1,"budget_inr":270000,"priority":null,"confidence":"EXPLICIT","notes":"Off-white finish.","group":"flooring","image_url":"https://julesbaxter.com.au/cdn/shop/products/AW8Y_2_636x636.png?v=1612936710","image_source":"Jules Baxter"},
+      {"id":"building-vinyl-flooring","name":"Vinyl flooring","product":"Vinyl flooring","qty":1,"budget_inr":80000,"priority":null,"confidence":"EXPLICIT","notes":"Wood-look finish.","group":"flooring","image_url":"https://shop12051.sfstatic.io/upload_dir/shop/FG.1.73.568.3-vinyl-planker.jpg","image_source":"Flottegulve"},
+      {"id":"building-clay-tiles","name":"Clay tiles","product":"Clay tiles","qty":1,"budget_inr":100000,"priority":null,"confidence":"EXPLICIT","notes":"","group":"flooring","image_url":"https://images.unsplash.com/photo-1644604120663-4e5fcdf33104?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=1600","image_source":"Unsplash"},
+      {"id":"building-children-flooring","name":"Children Church flooring","product":"Grass Mat","qty":1,"budget_inr":null,"priority":"PRIORITY","confidence":"EXPLICIT","notes":"Green grass-style flooring; budget not supplied.","group":"flooring","image_url":"https://www.shopbecker.com/globalassets/product-images/cfk5100-3010_2_.jpg?format=webp&quality=80&ver=2004143&width=1200","image_source":"Becker's"}
     ]},
     {"id":"future-projects","name":"Future Projects","phase":"Limitless","classification":"VISION","items":[
       {"id":"future-in-ear","name":"In-ear monitor system","product":"Not specified","qty":null,"budget_inr":null,"priority":null,"confidence":"EXPLICIT","notes":"Media next phase."},
