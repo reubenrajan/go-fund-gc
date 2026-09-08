@@ -8,5 +8,5 @@ const base = import.meta.env.BASE_URL;
 <head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><meta name="description" content={description} /><title>{title}</title>
 </head>
-<body><div class="shell"><header class="topbar"><a href={base}>GRACE CHAPEL / PLANS & PROJECTS</a><nav class="nav" aria-label="Primary"><a href={`${base}projects/`}>PROJECTS</a><a href={`${base}components/`}>COMPONENTS</a><a href={`${base}building/`}>CAMPUS</a><a href={`${base}transparency/`}>TRANSPARENCY</a><a href={`${base}get-involved/`}>GET INVOLVED</a></nav></header><main><slot /></main><footer class="footer">GRACE CHAPEL · KANNURU CAMPUS · PLANS & PROJECTS</footer></div></body>
+<body><div class="shell"><header class="topbar"><a href={`${base}#top`}>GRACE CHAPEL / PLANS & PROJECTS</a><nav class="nav" aria-label="Primary"><a href={`${base}#projects`}>PROJECTS</a><a href={`${base}#components`}>COMPONENTS</a><a href={`${base}#research`}>RESEARCH</a><a href={`${base}#finance`}>FINANCE</a><a href={`${base}#involvement`}>GET INVOLVED</a></nav></header><main><slot /></main><footer class="footer">GRACE CHAPEL · KANNURU CAMPUS · PLANS & PROJECTS · SINGLE PAGE</footer></div></body>
 </html>
